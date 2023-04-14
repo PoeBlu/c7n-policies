@@ -31,7 +31,7 @@ def lambda_handler(event, context):
         # messages. So sleep and then try again.
         if len(messages) == 0:
             time.sleep(1)
-            attempts = attempts + 1
+            attempts += 1
             continue
 
         for message in messages:
@@ -44,11 +44,7 @@ def lambda_handler(event, context):
 
             # Change color if there is one
             color = m['action'].get('cc')
-            if color:
-                color = color[0]
-            else:
-                color = '#F35A00'
-
+            color = color[0] if color else '#F35A00'
             # Compose the Slack message
             slack_message = {
                 'channel': os.environ['slack_channel'],
